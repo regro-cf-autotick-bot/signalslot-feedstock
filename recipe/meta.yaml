@@ -6,26 +6,28 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 64da1d89b3467c239af317779b237e7116b6f2b637ff29cd5226b59308d320e5
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script: {{ PYTHON }} -m pip install . --no-deps -vv
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
     - pip
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - contexter
     - eventlet
     - six
     - weakrefmethod
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - signalslot
     - signalslot.contrib
